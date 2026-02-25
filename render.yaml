@@ -7,8 +7,7 @@ services:
     name: video-shorts-api
     env: docker
     dockerfilePath: ./backend/Dockerfile
-    buildCommand: ""
-    startCommand: "./start.sh web"
+    dockerCommand: "./start.sh web"
     region: ohio
     plan: starter
     healthCheckPath: /api/health
@@ -50,8 +49,7 @@ services:
     name: video-shorts-worker
     env: docker
     dockerfilePath: ./backend/Dockerfile
-    buildCommand: ""
-    startCommand: "./start.sh worker"
+    dockerCommand: "./start.sh worker"
     region: ohio
     plan: standard # Use a standard or pro instance for more CPU/RAM for video processing
     envVars:
