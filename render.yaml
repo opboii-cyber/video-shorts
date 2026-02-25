@@ -1,0 +1,95 @@
+# render.yaml — Render Deployment Configuration
+# This file defines the infrastructure needed to run the SaaS on Render.com
+
+services:
+  # ── 1. The FastAPI Backend (Web Service) ──────────────────────
+  - type: web
+    name: video-shorts-api
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    buildCommand: ""
+    startCommand: "./start.sh web"
+    region: ohio
+    plan: starter
+    healthCheckPath: /api/health
+    envVars:
+      - key: PORT
+        value: 8000
+      - key: FRONTEND_URL
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: video-shorts-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: video-shorts-redis
+          property: connectionString
+      - key: POLAR_ACCESS_TOKEN
+        sync: false
+      - key: POLAR_WEBHOOK_SECRET
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: S3_BUCKET
+        sync: false
+      - key: S3_REGION
+        sync: false
+      - key: S3_ENDPOINT
+        sync: false
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+
+  # ── 2. The Celery Worker (Background Worker) ──────────────────
+  - type: worker
+    name: video-shorts-worker
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    buildCommand: ""
+    startCommand: "./start.sh worker"
+    region: ohio
+    plan: standard # Use a standard or pro instance for more CPU/RAM for video processing
+    envVars:
+      - key: CELERY_CONCURRENCY
+        value: 2 # Scale this up if you upgrade the instance type
+      - key: FRONTEND_URL
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: video-shorts-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: video-shorts-redis
+          property: connectionString
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: S3_BUCKET
+        sync: false
+      - key: S3_REGION
+        sync: false
+      - key: S3_ENDPOINT
+        sync: false
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+
+databases:
+  # ── 3. Managed PostgreSQL ─────────────────────────────────────
+  - name: video-shorts-db
+    region: ohio
+    plan: starter
+    postgresMajorVersion: 15
+
+# Note: Render currently requires creating Redis instances manually via the dashboard or API, 
+# it's not fully supported in render.yaml yet. 
+# You will need to create a Redis instance named 'video-shorts-redis'.
