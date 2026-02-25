@@ -9,7 +9,7 @@ services:
     dockerfilePath: ./backend/Dockerfile
     dockerCommand: "./start.sh web"
     region: ohio
-    plan: starter
+    plan: free
     healthCheckPath: /api/health
     envVars:
       - key: PORT
@@ -85,7 +85,7 @@ databases:
   # ── 3. Managed PostgreSQL ─────────────────────────────────────
   - name: video-shorts-db
     region: ohio
-    plan: starter
+    plan: free
     postgresMajorVersion: 15
 
 # Note: Render currently requires creating Redis instances manually via the dashboard or API, 
