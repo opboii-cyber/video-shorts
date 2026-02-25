@@ -21,10 +21,7 @@ services:
           name: video-shorts-db
           property: connectionString
       - key: REDIS_URL
-        fromService:
-          type: redis
-          name: video-shorts-redis
-          property: connectionString
+        sync: false
       - key: POLAR_ACCESS_TOKEN
         sync: false
       - key: POLAR_WEBHOOK_SECRET
@@ -62,10 +59,7 @@ services:
           name: video-shorts-db
           property: connectionString
       - key: REDIS_URL
-        fromService:
-          type: redis
-          name: video-shorts-redis
-          property: connectionString
+        sync: false
       - key: OPENAI_API_KEY
         sync: false
       - key: ANTHROPIC_API_KEY
