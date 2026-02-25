@@ -51,7 +51,7 @@ services:
     dockerfilePath: ./backend/Dockerfile
     dockerCommand: "./start.sh worker"
     region: ohio
-    plan: standard # Use a standard or pro instance for more CPU/RAM for video processing
+    plan: free # Changed to Free tier so no CC is required for deployment
     envVars:
       - key: CELERY_CONCURRENCY
         value: 2 # Scale this up if you upgrade the instance type
