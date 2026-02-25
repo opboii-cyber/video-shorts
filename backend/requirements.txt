@@ -1,0 +1,48 @@
+# ═══════════════════════════════════════════════════════════════
+# Video Shorts SaaS — Backend Dependencies
+# ═══════════════════════════════════════════════════════════════
+
+# ── Core Framework ─────────────────────────────────────────────
+fastapi>=0.111.0
+uvicorn[standard]>=0.30.0
+python-multipart>=0.0.9
+pydantic>=2.7.0
+aiofiles>=23.2.1
+
+# ── Database ───────────────────────────────────────────────────
+sqlalchemy>=2.0.30
+# For PostgreSQL (production):
+# psycopg2-binary>=2.9.9
+
+# ── Authentication ─────────────────────────────────────────────
+PyJWT>=2.8.0
+python-jose[cryptography]>=3.3.0
+
+# ── Video Processing ──────────────────────────────────────────
+opencv-python-headless>=4.9.0
+numpy>=1.26.0
+mediapipe>=0.10.11
+
+# ── Audio & Transcription ────────────────────────────────────
+openai>=1.30.0
+# For local Whisper (optional):
+# openai-whisper>=20231117
+
+# ── LLM (Hook Finding) ──────────────────────────────────────
+anthropic>=0.25.0
+
+# ── YouTube Download ─────────────────────────────────────────
+yt-dlp>=2024.5.0
+
+# ── Payments (Polar.sh) ──────────────────────────────────────
+httpx>=0.27.0
+
+# ── Job Queue ────────────────────────────────────────────────
+celery[redis]>=5.4.0
+redis>=5.0.0
+
+# ── Cloud Storage ────────────────────────────────────────────
+boto3>=1.34.0
+
+# ── Utilities ────────────────────────────────────────────────
+python-dotenv>=1.0.0
